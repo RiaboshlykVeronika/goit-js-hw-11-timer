@@ -12,12 +12,17 @@ class Timer {
             minutesTimer: document.querySelector(`${selector} span[data-value="mins"]`),
             secondsTimer: document.querySelector(`${selector} span[data-value="secs"]`),
         };
+        this.interval = null;
+
         this.start();
     }
 
     start() {
         setInterval(() => {
             const deltaTime = this.targetDate - Date.now();
+
+            if (deltaTime < 0) return clearInterval(this.interval);
+             
             this.updateClockface(this.getTimeComponents(deltaTime));
         }, 1000);
     }
